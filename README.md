@@ -29,6 +29,8 @@
 #### Verificar a instalação do NVM $ command -v nvm
 #### Instalar o Node.js usando NVM no WSL $ nvm install --lts
 #### Definir a versão do Node.js a ser usada $ nvm use --lts
+#### Instalar e iniciar $ npm install
+#### Deletar pasta Node Modules
 #### Instalar e iniciar $ npm install $ npm start
 #### Abra o http://localhost:3000/#/ no navegador.
 #### Interagir com a aplicação
