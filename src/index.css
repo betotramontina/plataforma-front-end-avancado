@@ -5,7 +5,6 @@ body {
   margin: 0px;
   background-color: #EAEAEA;
   font-family: 'Roboto';
-
 }
 
 .content-product {
@@ -22,6 +21,25 @@ header {
   top: 0px;
   background: black;
   display: flex;
+  z-index: 10;
+}
+
+.weather-info-bar {
+    /* Garante que ela ocupe a largura total */
+    width: 100%;
+    /* Define uma altura mínima para o conteúdo aparecer */
+    min-height: 25px; /* Ajuste conforme necessário */
+    /* Empurra a barra de clima para baixo, após o cabeçalho */
+    margin-top: 47px; /* A mesma altura do header */
+    /* Estilize o texto para ser visível */
+    background-color: #f0f0f0; /* Um fundo claro para contraste */
+    color: #333; /* Uma cor escura para o texto */
+    text-align: center;
+    padding: 5px 0;
+    box-sizing: border-box; /* Garante que padding não adicione largura extra */
+    font-size: 14px;
+    line-height: 1.5;
+    z-index: 5; /* Z-index menor que o header, mas acima do restante do conteúdo */
 }
 
 .user {
@@ -55,7 +73,7 @@ header {
   left: 0px;
   text-align: center;
   box-sizing: border-box;
-  background-color: #FFD621;
+  background-color: #18b6ff;
   margin-bottom: 50px;
   border-bottom: 47px solid white;
 }
@@ -153,7 +171,6 @@ footer {
     color: #707070;
 }
 
-
 .minus,
 .plus {
     width: 20px;
@@ -203,4 +220,23 @@ footer {
         font-size: 16px;
         display: block;
     }
+}
+
+.bannerhome {
+    width: 100%; /* Garante que o contêiner ocupe toda a largura disponível */
+    text-align: center; /* Centraliza a imagem dentro do contêiner */
+    margin-top: 20px; /* Adiciona algum espaço acima da imagem */
+    margin-bottom: 20px; /* Adiciona algum espaço abaixo da imagem */
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura/altura */
+}
+
+/* Estilos para a imagem em si */
+.bannerhome img {
+    max-width: 100%; /* CRUCIAL: A imagem nunca será maior que seu contêiner pai */
+    height: auto; /* CRUCIAL: Mantém a proporção da imagem quando a largura muda */
+    display: block; /* Remove espaços extras que navegadores adicionam por padrão a imagens */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente se o contêiner for maior */
+    /* Se a imagem for muito grande, você pode definir uma largura máxima inicial
+       para evitar que ela ocupe toda a tela em desktops grandes, por exemplo: */
+    /* width: 800px; */ /* Ou o tamanho que preferir como máximo */
 }
