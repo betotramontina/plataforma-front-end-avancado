@@ -5,6 +5,7 @@ body {
   margin: 0px;
   background-color: #EAEAEA;
   font-family: 'Roboto';
+  height: 100%;
 }
 
 .content-product {
@@ -16,43 +17,30 @@ body {
 header {
   position: absolute;
   width: 100%;
-  height: 47px;
+  height: 75px;
   left: 0px;
   top: 0px;
-  background: black;
+  background: white;
   display: flex;
-  z-index: 10;
+  justify-content: space-between; /* Novo: Espaça os itens (logo e user) */
+  align-items: center; /* Novo: Centraliza verticalmente os itens no header */
+  padding: 0 20px; /* Novo: Adiciona um padding para a logo e o user não colarem nas bordas */
+  box-sizing: border-box; /* Garante que o padding não adicione largura extra */
+  z-index: 100;
 }
 
 .weather-info-bar {
-    /* Garante que ela ocupe a largura total */
     width: 100%;
-    /* Define uma altura mínima para o conteúdo aparecer */
-    min-height: 25px; /* Ajuste conforme necessário */
-    /* Empurra a barra de clima para baixo, após o cabeçalho */
-    margin-top: 47px; /* A mesma altura do header */
-    /* Estilize o texto para ser visível */
-    background-color: #f0f0f0; /* Um fundo claro para contraste */
-    color: #333; /* Uma cor escura para o texto */
+    min-height: 25px;
+    margin-top: 75px;
+    background-color: #f0f0f0;
+    color: #333; 
     text-align: center;
     padding: 5px 0;
-    box-sizing: border-box; /* Garante que padding não adicione largura extra */
+    box-sizing: border-box;
     font-size: 14px;
     line-height: 1.5;
-    z-index: 5; /* Z-index menor que o header, mas acima do restante do conteúdo */
-}
-
-.user {
-  position: absolute;
-  width: 120px;
-  height: 30px;
-  right: 0px;
-  top: 9px;
-  background: url(assets/user.png);
-  background-repeat: no-repeat;
-  background-position: 60px;
-  display: flex;
-  align-items: center;
+    z-index: 5; 
 }
 
 .user span {
@@ -61,7 +49,7 @@ header {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-  color: #FFFFFF;
+  color: #2fcc76;
   margin: 0px 2px;
 }
 
@@ -73,14 +61,13 @@ header {
   left: 0px;
   text-align: center;
   box-sizing: border-box;
-  background-color: #18b6ff;
+  background-color: #2fcc76;
   margin-bottom: 50px;
   border-bottom: 47px solid white;
 }
 
 .banner img {
   height: 158px;
-
 }
 
 
@@ -129,8 +116,21 @@ header {
 }
 
 footer {
-  background-color: #FFD621;
-  height: 47px;
+  background-color: rgb(50, 50, 50);
+  height: 75px;
+  display: flex; /* Habilita Flexbox */
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  width: 100%; /* Garante que ocupe a largura total */
+  box-sizing: border-box; /* Inclui padding e border no cálculo da largura/altura */
+}
+
+footer p {
+  color: white; /* Cor do texto no footer */
+  font-family: 'Roboto', sans-serif; /* Garante a mesma fonte do site */
+  font-size: 0.9em; /* Tamanho da fonte do texto */
+  margin: 0; /* Remove margens padrão do parágrafo */
+  text-align: center; /* Centraliza o texto */
 }
 
 /* Parte relativa a cada item */
@@ -239,4 +239,275 @@ footer {
     /* Se a imagem for muito grande, você pode definir uma largura máxima inicial
        para evitar que ela ocupe toda a tela em desktops grandes, por exemplo: */
     /* width: 800px; */ /* Ou o tamanho que preferir como máximo */
+}
+
+.logo img {
+    margin: 50px;
+    height: 40px; /* Altura da sua logo. AJUSTE ISSO CONFORME O TAMANHO DESEJADO! */
+    width: auto; /* Mantém a proporção da logo */
+    max-width: 120px; /* Largura máxima para a logo, ajuste conforme necessário */
+    display: block; /* Para evitar problemas de espaçamento */
+}
+
+.contact-content {
+    flex-grow: 1; /* Faz com que esta seção ocupe todo o espaço disponível restante verticalmente */
+    
+    /* Mantenha seus estilos existentes para .contact-content abaixo */
+    padding: 20px; 
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto;
+    box-sizing: border-box;
+
+    /* background-color: lightblue; */ /* OPCIONAL: Descomente para debug e veja o quanto ela está crescendo */
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px; /* Aumenta um pouco a largura máxima para um visual mais Google Forms */
+    margin: 40px auto; /* Aumenta a margem superior/inferior para espaçar melhor */
+    padding: 30px; /* Aumenta o padding interno para um visual mais espaçoso */
+    background-color: #ffffff; /* Fundo branco puro */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra mais visível para o efeito flutuante */
+    border: 1px solid #e0e0e0; /* Borda suave para um acabamento limpo */
+    box-sizing: border-box;
+}
+
+/* --- Estilos para labels (Nome, Telefone, ONG, Mensagem) --- */
+.contact-form label {
+    margin-bottom: 8px;
+    font-weight: 500; /* Um pouco menos negrito que 'bold' para um visual mais suave */
+    color: #5f6368; /* Cor de texto mais suave, padrão Google Forms */
+    font-size: 0.95em; /* Tamanho da fonte levemente menor */
+    display: block;
+    text-align: left;
+}
+
+/* --- Estilos para campos de input, select e textarea --- */
+.contact-form input[type="text"],
+.contact-form input[type="tel"],
+.contact-form input[type="email"],
+.contact-form textarea,
+.contact-form select {
+    width: 100%;
+    padding: 12px 15px; /* Aumenta o padding interno para um toque mais "preenchido" */
+    margin-bottom: 25px; /* Aumenta o espaçamento entre os campos */
+    border: 1px solid #dadce0; /* Borda fina e clara */
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    color: #3c4043; /* Cor do texto dentro do input */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição para o foco */
+}
+
+/* Efeito de foco nos campos (quando o usuário clica/digita) */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus,
+.contact-form select:focus {
+    outline: none; /* Remove o contorno padrão do navegador */
+    border-color: #1a73e8; /* Cor da borda ao focar (azul do Google) */
+    box-shadow: 0 0 0 1px #1a73e8; /* Sombra fina e azul ao focar */
+}
+
+/* Estilo para textarea (manter o resize) */
+.contact-form textarea {
+    resize: vertical;
+    min-height: 80px; /* Altura mínima para a área de mensagem */
+}
+
+/* --- Estilos para mensagens de erro --- */
+.error-message {
+    color: #d93025; /* Vermelho mais específico para erros (padrão Google) */
+    font-size: 0.85em;
+    margin-top: -20px; /* Ajusta para ficar mais próximo do campo */
+    margin-bottom: 20px; /* Garante que o erro não se junte ao próximo label */
+    text-align: left;
+    display: block;
+}
+
+/* --- Estilos para o botão de enviar --- */
+.contact-form button[type="submit"] {
+    margin-top: 20px; /* Mais espaço acima do botão */
+    background-color: #1a73e8; /* Azul primário do Google */
+    color: white;
+    padding: 12px 25px; /* Padding ajustado */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500; /* Peso da fonte mais suave */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    align-self: flex-end; /* Alinha o botão à direita dentro do formulário */
+    /* Ou use align-self: center; se preferir o botão centralizado */
+}
+
+.contact-form button[type="submit"]:hover {
+    background-color: #1565c0; /* Tom mais escuro no hover */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Sombra sutil no hover */
+}
+
+/* --- Estilos para o cabeçalho e parágrafo da seção de contato --- */
+.contact-content h2 {
+    color: #202124; /* Cor de texto mais formal para títulos */
+    margin-bottom: 10px;
+    font-size: 2em; /* Tamanho do título da seção */
+}
+
+.contact-content p {
+    color: #5f6368; /* Cor de texto padrão */
+    margin-bottom: 30px; /* Mais espaço abaixo do parágrafo de introdução */
+    font-size: 1.1em;
+}
+
+/* --- Estilos para a lista de submissões --- */
+.submission-list {
+    margin-top: 40px;
+    padding: 25px; /* Mais padding */
+    background-color: #f8f8f8; /* Fundo muito leve */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra mais suave */
+    max-width: 600px; /* Mesma largura do formulário */
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #e5e5e5; /* Borda sutil */
+}
+
+.submission-list h3 {
+    color: #202124;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.submission-list ul li {
+    background-color: #ffffff; /* Fundo branco para cada item da lista */
+    border: 1px solid #f0f0f0; /* Borda mais suave */
+    border-left: 4px solid #1a73e8; /* Borda colorida à esquerda para destaque */
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    text-align: left;
+    color: #5f6368;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.submission-list ul li strong {
+    color: #202124;
+}
+
+/* --- Responsive adjustments (Optional, but good practice) --- */
+@media (max-width: 768px) {
+    .contact-form {
+        margin: 20px 15px; /* Margem menor nas laterais para telas pequenas */
+        padding: 20px;
+    }
+    .contact-content {
+        margin: 20px 15px;
+        padding: 15px;
+    }
+    .contact-content h2 {
+        font-size: 1.8em;
+    }
+    .contact-content p {
+        font-size: 1em;
+    }
+    .submission-list {
+        margin: 20px 15px;
+        padding: 15px;
+    }
+}
+
+.contact-form-submit-button { /* Use APENAS esta classe no HTML para este botão */
+    margin-top: 20px; 
+    background-color: #1a73e8 !important; /* <<< ADICIONE !important AQUI para forçar a cor */
+    color: white !important; /* <<< ADICIONE !important AQUI para forçar a cor do texto */
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer !important; /* <<< ADICIONE !important AQUI para forçar o cursor */
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    /* Para centralizar este botão dentro do .text-intro, use: */
+    display: block; /* Garante que ocupe a própria linha para centralização com margin */
+    margin-left: auto; 
+    margin-right: auto;
+    /* Ou, se o pai (.text-intro) for flexbox (display: flex; flex-direction: column;), pode usar: */
+    /* align-self: center; */
+}
+
+.contact-form-submit-button:hover {
+    background-color: #1565c0 !important; /* <<< ADICIONE !important AQUI */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important; /* <<< ADICIONE !important AQUI */
+}
+
+.home-intro-section {
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo (home-intro-overlay-content) */
+    align-items: center; /* Centraliza o conteúdo (home-intro-overlay-content) */
+    box-sizing: border-box;
+    padding: 40px 20px; /* Padding interno para o conteúdo */
+    /* PROPRIEDADES DA IMAGEM DE FUNDO (SOLIDARIEDADE) */
+    background-image: url('./assets/solidariedade.jpg'); /* <<--- VERIFIQUE O CAMINHO! */
+    background-size: cover; /* Faz a imagem cobrir toda a área, responsivo */
+    background-position: center; /* Centraliza a imagem no fundo */
+    background-repeat: no-repeat; /* Evita repetição */
+    background-attachment: scroll; /* A imagem rola com a página. Use 'fixed' para efeito paralaxe. */
+
+    position: relative; /* CRUCIAL para o overlay */
+    overflow: hidden; /* Garante que a imagem de fundo não vaze do contêiner */
+}
+
+/* Pseudo-elemento para criar um overlay semi-transparente sobre a imagem de fundo */
+.home-intro-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay preto com 50% de opacidade */
+    z-index: 0; /* Fica abaixo do conteúdo, mas acima da imagem de fundo */
+}
+
+/* --- ESTILOS PARA O CONTEÚDO SOBREPOSTO (home-intro-overlay-content) --- */
+.home-intro-overlay-content {
+    position: relative; /* Garante que o conteúdo fique acima do overlay */
+    z-index: 1; /* Acima do ::before */
+    
+    text-align: center;
+    color: white; /* Cor do texto (ajuste para contraste com a imagem) */
+    width: 90%; /* Largura do contêiner de texto e botão */
+    max-width: 800px; /* Largura máxima em telas grandes */
+    margin: 0 auto; /* Centraliza horizontalmente */
+
+    display: flex; /* Para empilhar e centralizar texto/botão */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-intro-overlay-content h2 {
+    font-size: 3.5em; /* Tamanho do título (ajuste) */
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 15px; /* Espaço entre o título e o parágrafo */
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.home-intro-overlay-content p {
+    font-size: 1.8em; /* Tamanho do parágrafo (ajuste) */
+    font-weight: normal;
+    line-height: 1.3;
+    margin-bottom: 30px; /* Espaço entre o texto e o botão */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
 }
