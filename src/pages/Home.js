@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'; // Importe useState e useEffect
-import banner from '../assets/banner.png';
-import solidariedade from '../assets/solidariedade.jpg';
+import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
@@ -73,34 +72,36 @@ export default function Home() {
   return (
     <div className="content-product">
       <header>
+        <div className="logo">
+          <img src={logo} alt="Logo da Empresa" />
+        </div>
         <div className="user">
-          <span>Usuário</span>
+          <span>Home</span>
+        </div>
+        <div className="user">
+          <span>ONGs Parceiras</span>
+        </div>
+        <div className="user">
+          <span>Seja Voluntário</span>
         </div>
       </header>
 
-      {/* Div para exibir as informações do clima, similar à página Products */}
+    {/* Div para exibir as informações do clima, similar à página Products */}
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
-
-      <section className="banner">
-        <img src={banner} alt="Banner" />
-      </section>
       
-      <section className="main-products">
-        <div className='text-intro'>
-          <p> Faça sua doação</p>
-          <button className='more-info' onClick={() => navigate('/products')}> Ver projetos</button>
+      <section className="home-intro-section"> {/* CLASSE NOVA PARA A SEÇÃO */}
+        <div className='home-intro-overlay-content'> {/* CLASSE NOVA PARA O CONTEÚDO INTERNO */}
+          <h2>Dowii</h2> {/* Mude para h2 ou p, dependendo do design */}
+          <p>Plataforma que conecta voluntários e ONGs.</p>
+          <button className='contact-form-submit-button' onClick={() => navigate('/products')}> Conhecer ONGs Parceiras</button>
         </div>
       </section>
 
-      <section className="calltoaction">
-        <div className="bannerhome">
-            <img src={solidariedade} alt="Imagem de Solidariedade" />
-        </div>
-      </section>
-
-      <footer></footer>
+      <footer>
+        <p>&copy; {new Date().getFullYear()} Dowii. Todos os direitos reservados.</p>
+      </footer>
     </div>
   );
 }
