@@ -1,24 +1,46 @@
 import { useEffect, useState } from "react";
 import Item from "../components/Item";
-import banner from '../assets/banner.png';
-import axios from 'axios';
+import logo from '../assets/logo.png';
+import ong1 from '../assets/ong1.png';
+import ong2 from '../assets/ong2.png';
+import ong3 from '../assets/ong3.png';
+import ong4 from '../assets/ong4.png';
 import { useNavigate } from 'react-router-dom';
+
+const staticProducts = [
+  { 
+    id: 1, 
+    name: "ONG Esperança", 
+    image: ong1,
+    description: "Ajude famílias carentes com alimentos essenciais.",
+    // Adicione outras propriedades que seu componente Item precise
+  },
+  { 
+    id: 2, 
+    name: "ONG Mãos Unidas", 
+    image:  ong2,
+    description: "Garanta a saúde e dignidade com itens de higiene pessoal.",
+  },
+  { 
+    id: 3, 
+    name: "ONG Futuro Brilhante", 
+    image: ong3,
+    description: "Apoie a educação de crianças e jovens.",
+  },
+  { 
+    id: 4, 
+    name: "ONG Abraço Bom", 
+    image: ong4,
+    description: "Mantenha alguém aquecido no inverno.",
+  },
+  ];
 
 export default function Products() {
   const navigate = useNavigate();
-  const [productList, setProductList] = useState([]);
-  const [weatherInfo, setWeatherInfo] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [cityIndex, setCityIndex] = useState(0); // Estado para controlar o índice da cidade
+  const [weatherInfo, setWeatherInfo] = useState(""); // eslint-disable-next-line no-unused-vars
+  const [cityIndex, setCityIndex] = useState(0); 
 
   const apiKey = "79f2870e4528540bb5f5079faa56e91f"; // Sua chave da API
-
-  // Efeito para buscar a lista de produtos (executado uma única vez na montagem)
-  useEffect(() => {
-    axios.get('http://127.0.0.1:5000/produtos')
-      .then(res => setProductList(res.data.produtos))
-      .catch(error => console.log(error));
-  }, []); // Array de dependências vazio para executar apenas uma vez
 
   // Efeito para buscar o clima e atualizar a cada 5 segundos
   useEffect(() => {
@@ -82,8 +104,17 @@ export default function Products() {
   return (
     <div className="content-product">
       <header>
+        <div className="logo">
+          <img src={logo} alt="Logo da Empresa" />
+        </div>
         <div className="user">
-          <span>Usuário</span>
+          <span>Home</span>
+        </div>
+        <div className="user">
+          <span>ONGs Parceiras</span>
+        </div>
+        <div className="user">
+          <span>Seja Voluntário</span>
         </div>
       </header>
 
@@ -91,25 +122,22 @@ export default function Products() {
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
-      
-      <section className="banner">
-        <img src={banner} alt="Banner" />
-      </section>
 
-      <section className="main-products">
-        {productList.map((p, index) => (
-          <Item key={index} product={p} />
+      <section className="main-products"> 
+        {staticProducts.map((p) => ( // <<< AGORA MAPEA 'staticProducts'
+          <Item key={p.id} product={p} /> // <<< Certifique-se de que 'key' e 'product' usam a propriedade correta
         ))}
       </section>
 
-            <section className="main-products">
-        <div className='text-intro'>
-          <p> Faça sua doação</p>
-          <button className='more-info' onClick={() => navigate('/contact')}> Ver projetos</button>
-        </div>
+      <section className="contact-content">
+        <h2>Seja a mudança.</h2>
+        <p>Seja um voluntário.</p>
+        <button className='contact-form-submit-button' onClick={() => navigate('/contact')}> Cadastre-se</button>
       </section>
 
-      <footer></footer>
+      <footer>
+        <p>&copy; {new Date().getFullYear()} Dowii. Todos os direitos reservados.</p>
+      </footer>
     </div>
   );
 }
