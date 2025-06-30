@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import banner from '../assets/banner.png';
+import logo from '../assets/logo.png';
 
 export default function Contact() {
   const [weatherInfo, setWeatherInfo] = useState("");
@@ -67,11 +67,93 @@ export default function Contact() {
 
   }, [apiKey]); // O efeito depende apenas da apiKey. cityIndex é gerenciado internamente pelo setState.
 
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    ong: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({}); // Para armazenar erros de validação
+  const [submissions, setSubmissions] = useState([]); // Para armazenar e exibir as submissões
+
+  // useEffect para carregar dados do localStorage na montagem
+  useEffect(() => {
+    const savedSubmissions = JSON.parse(localStorage.getItem('contactSubmissions')) || [];
+    setSubmissions(savedSubmissions);
+  }, []);
+
+  // Função para lidar com a mudança nos campos do formulário
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Função para validar os campos
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = "Nome é obrigatório.";
+    }
+    // Validação do telefone: pelo menos 10 dígitos (DDD + número)
+    // Exemplo de formato: (XX) XXXX-XXXX ou XX XXXX-XXXX
+    const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/; // Regex para (XX) XXXX-XXXX ou XX XXXX-XXXX/XXXXX-XXXX
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Telefone é obrigatório.";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Telefone inválido. Use o formato (XX) XXXX-XXXX ou XX XXXXX-XXXX.";
+    }
+    if (!formData.ong) {
+      newErrors.ong = "Selecione uma ONG.";
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = "Mensagem é obrigatória.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+  };
+
+  // Função para lidar com a submissão do formulário
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Previne o comportamento padrão de recarregar a página
+
+    if (validate()) {
+      // Se a validação passar, salve os dados
+      const newSubmission = { ...formData, id: Date.now() }; // Adiciona um ID único
+      const updatedSubmissions = [...submissions, newSubmission];
+      setSubmissions(updatedSubmissions); // Atualiza o estado da lista
+      localStorage.setItem('contactSubmissions', JSON.stringify(updatedSubmissions)); // Salva no localStorage
+
+      // Limpa o formulário após a submissão
+      setFormData({
+        name: '',
+        phone: '',
+        ong: '',
+        message: ''
+      });
+      setErrors({}); // Limpa quaisquer erros antigos
+      alert('Mensagem enviada com sucesso!'); // Feedback para o usuário
+    } else {
+      alert('Por favor, corrija os erros no formulário.');
+    }
+  };
+
   return (
     <div className="content-product">
       <header>
+        <div className="logo">
+          <img src={logo} alt="Logo da Empresa" />
+        </div>
         <div className="user">
-          <span>Usuário</span>
+          <span>Home</span>
+        </div>
+        <div className="user">
+          <span>ONGs Parceiras</span>
+        </div>
+        <div className="user">
+          <span>Seja Voluntário</span>
         </div>
       </header>
 
@@ -79,37 +161,88 @@ export default function Contact() {
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
-
-      <section className="banner">
-        <img src={banner} alt="Banner" />
-      </section>
       
-       <section className="contact-content">
-        <h2>Fale Conosco</h2>
-        <p>Preencha o formulário abaixo ou entre em contato pelos nossos canais.</p>
+    <section className="contact-content">
+        <h2>Seja um voluntário</h2>
+        <p>Preencha o formulário abaixo e escolha uma ONG para direcionarmos sua mensagem.</p>
         
-        <div className="contact-details">
-            <p>Email: contato@seusite.com</p>
-            <p>Telefone: (XX) XXXX-XXXX</p>
-            <p>Endereço: Sua Rua, Seu Bairro, Sua Cidade</p>
-        </div>
-        
-        <form className="contact-form">
+        {/* Formulário com validação e salvamento no localStorage */}
+        <form className="contact-form" onSubmit={handleSubmit}>
             <label htmlFor="name">Nome:</label>
-            <input type="text" id="name" name="name" required />
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              required 
+            />
+            {errors.name && <span className="error-message">{errors.name}</span>}
 
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <label htmlFor="phone">Telefone:</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              value={formData.phone} 
+              onChange={handleChange} 
+              required 
+              placeholder="(XX) XXXX-XXXX ou XX XXXXX-XXXX" 
+            />
+            {errors.phone && <span className="error-message">{errors.phone}</span>}
+
+            <label htmlFor="ong">Escolha a ONG:</label>
+            <select 
+              id="ong" 
+              name="ong" 
+              value={formData.ong} 
+              onChange={handleChange} 
+              required
+            >
+                <option value="">-- Selecione uma ONG --</option>
+                <option value="ong-esperanca">ONG Esperança</option>
+                <option value="ong-abracobom">ONG Abraço Bom</option>
+                <option value="ong-futurobrilhante">ONG Futuro Brilhante</option>
+                <option value="ong-maosunidas">ONG Mãos Unidas</option>
+            </select>
+            {errors.ong && <span className="error-message">{errors.ong}</span>}
 
             <label htmlFor="message">Mensagem:</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
+            <textarea 
+              id="message" 
+              name="message" 
+              rows="5" 
+              value={formData.message} 
+              onChange={handleChange} 
+              required
+            ></textarea>
+            {errors.message && <span className="error-message">{errors.message}</span>}
 
             <button type="submit">Enviar Mensagem</button>
         </form>
 
+        {/* Lista de Dados Preenchidos */}
+        {submissions.length > 0 && (
+          <div className="submission-list">
+            <h3>Mensagens Enviadas:</h3>
+            <ul>
+              {submissions.map(submission => (
+                <li key={submission.id}>
+                  <strong>Nome:</strong> {submission.name} <br />
+                  <strong>Telefone:</strong> {submission.phone} <br />
+                  <strong>ONG:</strong> {submission.ong} <br />
+                  <strong>Mensagem:</strong> {submission.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
       </section>
-      
-      <footer></footer>
+
+      <footer>
+        <p>&copy; {new Date().getFullYear()} Dowii. Todos os direitos reservados.</p>
+      </footer>
     </div>
   );
 }
