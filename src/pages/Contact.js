@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import logo from '../assets/logo.png';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Contact() {
   const [weatherInfo, setWeatherInfo] = useState("");
   // eslint-disable-next-line no-unused-vars
-  const [cityIndex, setCityIndex] = useState(0); // Estado para controlar o índice da cidade
+  const [cityIndex, setCityIndex] = useState(0);
 
-  const apiKey = "79f2870e4528540bb5f5079faa56e91f"; // Sua chave da API
+  const apiKey = "79f2870e4528540bb5f5079faa56e91f";
 
-  // Efeito para buscar o clima e atualizar a cada 5 segundos
   useEffect(() => {
     const cidades = [
       "Brasilia,BR", "São Paulo,BR", "Rio de Janeiro,BR", "Salvador,BR",
@@ -16,10 +16,7 @@ export default function Contact() {
       "Recife,BR", "Porto Alegre,BR"
     ];
 
-    // Função que busca o clima da cidade atual e atualiza o estado
     const buscarClimaEAtualizar = () => {
-      // Usamos o callback de setCityIndex para garantir que estamos sempre
-      // trabalhando com o índice mais atualizado e para a próxima cidade.
       setCityIndex(prevIndex => {
         const currentCityIndexToFetch = prevIndex;
         const cidade = cidades[currentCityIndexToFetch];
@@ -29,7 +26,7 @@ export default function Contact() {
 
         fetch(url)
           .then(response => {
-            if (!response.ok) { // Verifica se a resposta da rede foi bem-sucedida
+            if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
@@ -45,36 +42,33 @@ export default function Contact() {
             setWeatherInfo("Não foi possível carregar o clima.");
           });
 
-        // Retorna o próximo índice para a próxima rodada da função no intervalo
         return (prevIndex + 1) % cidades.length;
       });
     };
 
     console.log(`[Clima] useEffect de clima inicializado (Configurando intervalo).`);
 
-    // Chamada inicial para buscar o clima imediatamente na montagem do componente
     buscarClimaEAtualizar();
 
-    // Configura o intervalo para chamar a função a cada 5 segundos
     const intervalId = setInterval(buscarClimaEAtualizar, 5000);
     console.log(`[Clima] Intervalo definido com ID: ${intervalId}`);
 
-    // Função de limpeza: será executada quando o componente for desmontado para parar o intervalo
     return () => {
       console.log(`[Clima] Limpando intervalo com ID: ${intervalId}`);
       clearInterval(intervalId);
     };
 
-  }, [apiKey]); // O efeito depende apenas da apiKey. cityIndex é gerenciado internamente pelo setState.
+  }, [apiKey]);
 
+  const location = useLocation();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     ong: '',
     message: ''
   });
-  const [errors, setErrors] = useState({}); // Para armazenar erros de validação
-  const [submissions, setSubmissions] = useState([]); // Para armazenar e exibir as submissões
+  const [errors, setErrors] = useState({});
+  const [submissions, setSubmissions] = useState([]); 
 
   // useEffect para carregar dados do localStorage na montagem
   useEffect(() => {
@@ -99,7 +93,7 @@ export default function Contact() {
     }
     // Validação do telefone: pelo menos 10 dígitos (DDD + número)
     // Exemplo de formato: (XX) XXXX-XXXX ou XX XXXX-XXXX
-    const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/; // Regex para (XX) XXXX-XXXX ou XX XXXX-XXXX/XXXXX-XXXX
+    const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
     if (!formData.phone.trim()) {
       newErrors.phone = "Telefone é obrigatório.";
     } else if (!phoneRegex.test(formData.phone)) {
@@ -112,7 +106,7 @@ export default function Contact() {
       newErrors.message = "Mensagem é obrigatória.";
     }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Retorna true se não houver erros
+    return Object.keys(newErrors).length === 0;
   };
 
   // Função para lidar com a submissão do formulário
@@ -133,7 +127,7 @@ export default function Contact() {
         ong: '',
         message: ''
       });
-      setErrors({}); // Limpa quaisquer erros antigos
+      setErrors({});
       alert('Mensagem enviada com sucesso!'); // Feedback para o usuário
     } else {
       alert('Por favor, corrija os erros no formulário.');
@@ -147,17 +141,17 @@ export default function Contact() {
           <img src={logo} alt="Logo da Empresa" />
         </div>
         <div className="user">
-          <span>Home</span>
+          <Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Home</Link>
         </div>
         <div className="user">
-          <span>ONGs Parceiras</span>
+          <Link to="/products" className={location.pathname === '/products' ? 'active-link' : ''}>ONGs Parceiras</Link>
         </div>
         <div className="user">
-          <span>Seja Voluntário</span>
+          {/* Este link leva à página 404 para fins de demonstração */}
+          <Link to="/seja-voluntario-404-test" className={location.pathname === '/contact' ? 'active-link' : ''}>Seja Voluntário</Link>
         </div>
       </header>
 
-      {/* Div para exibir as informações do clima, posicionada abaixo do header */}
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
