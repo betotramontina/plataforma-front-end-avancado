@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react'; // Importe useState e useEffect
+import { useEffect, useState } from 'react';
 import logo from '../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Estados para a informação do clima
   const [weatherInfo, setWeatherInfo] = useState("");
   // eslint-disable-next-line no-unused-vars
-  const [cityIndex, setCityIndex] = useState(0); // Para alternar entre as cidades
+  const [cityIndex, setCityIndex] = useState(0);
 
-  const apiKey = "79f2870e4528540bb5f5079faa56e91f"; // Sua chave da API da OpenWeatherMap
+  const apiKey = "79f2870e4528540bb5f5079faa56e91f";
 
-  // Efeito para buscar o clima e atualizar a cada 5 segundos
   useEffect(() => {
     const cidades = [
       "Brasilia,BR", "São Paulo,BR", "Rio de Janeiro,BR", "Salvador,BR",
@@ -20,7 +19,6 @@ export default function Home() {
       "Recife,BR", "Porto Alegre,BR"
     ];
 
-    // Função que busca o clima da cidade atual e atualiza o estado
     const buscarClimaEAtualizar = () => {
       setCityIndex(prevIndex => {
         const currentCityIndexToFetch = prevIndex;
@@ -31,7 +29,7 @@ export default function Home() {
 
         fetch(url)
           .then(response => {
-            if (!response.ok) { // Verifica se a resposta da rede foi bem-sucedida
+            if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
@@ -47,27 +45,23 @@ export default function Home() {
             setWeatherInfo("Não foi possível carregar o clima.");
           });
 
-        // Retorna o próximo índice para a próxima rodada da função no intervalo
         return (prevIndex + 1) % cidades.length;
       });
     };
 
     console.log(`[Clima Home] useEffect de clima inicializado (Configurando intervalo).`);
 
-    // Chamada inicial para buscar o clima imediatamente na montagem do componente
     buscarClimaEAtualizar();
 
-    // Configura o intervalo para chamar a função a cada 5 segundos
     const intervalId = setInterval(buscarClimaEAtualizar, 5000);
     console.log(`[Clima Home] Intervalo definido com ID: ${intervalId}`);
 
-    // Função de limpeza: será executada quando o componente for desmontado para parar o intervalo
     return () => {
       console.log(`[Clima Home] Limpando intervalo com ID: ${intervalId}`);
       clearInterval(intervalId);
     };
 
-  }, [apiKey]); // O efeito depende apenas da apiKey. cityIndex é gerenciado internamente pelo setState.
+  }, [apiKey]);
 
   return (
     <div className="content-product">
@@ -76,24 +70,23 @@ export default function Home() {
           <img src={logo} alt="Logo da Empresa" />
         </div>
         <div className="user">
-          <span>Home</span>
+          <Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Home</Link>
         </div>
         <div className="user">
-          <span>ONGs Parceiras</span>
+          <Link to="/products" className={location.pathname === '/products' ? 'active-link' : ''}>ONGs Parceiras</Link>
         </div>
         <div className="user">
-          <span>Seja Voluntário</span>
+          <Link to="/contact" className={location.pathname === '/contact' ? 'active-link' : ''}>Seja Voluntário</Link>
         </div>
       </header>
 
-    {/* Div para exibir as informações do clima, similar à página Products */}
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
       
-      <section className="home-intro-section"> {/* CLASSE NOVA PARA A SEÇÃO */}
-        <div className='home-intro-overlay-content'> {/* CLASSE NOVA PARA O CONTEÚDO INTERNO */}
-          <h2>Dowii</h2> {/* Mude para h2 ou p, dependendo do design */}
+      <section className="home-intro-section"> 
+        <div className='home-intro-overlay-content'>
+          <h2>Dowii</h2> 
           <p>Plataforma que conecta voluntários e ONGs.</p>
           <button className='contact-form-submit-button' onClick={() => navigate('/products')}> Conhecer ONGs Parceiras</button>
         </div>
