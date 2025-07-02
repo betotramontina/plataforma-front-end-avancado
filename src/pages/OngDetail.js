@@ -1,12 +1,13 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { staticProducts } from '../data/ongsData';
 import logo from '../assets/logo.png';
 
 function OngDetail() {
   const { id } = useParams();
-  console.log("OngDetail Log: 1. ID da URL (string):", id); 
+  const navigate = useNavigate();
 
+  console.log("OngDetail Log: 1. ID da URL (string):", id); 
   console.log("OngDetail Log: 2. Conteúdo de staticProducts (DEVE ser um array de ONGs):", staticProducts); 
   
   const ong = staticProducts.find(o => o.id === parseInt(id));
@@ -76,15 +77,14 @@ function OngDetail() {
             Detalhe: {ong.tooltipText}
           </p>
         )}
-        <Link to="/products" style={{
-          display: 'inline-block', marginTop: '30px', padding: '10px 20px',
-          backgroundColor: '#2fcc76', color: 'white', textDecoration: 'none',
-          borderRadius: '5px', fontWeight: 'bold'
-        }}>
-          Voltar para as ONGs
-        </Link>
+        <button 
+          className='contact-form-submit-button'
+          onClick={() => navigate('/contact')}
+          style={{ marginTop: '30px' }}
+        > 
+          Seja um Voluntário
+        </button>      
       </section>
-
       <footer>
         <p>&copy; {new Date().getFullYear()} Dowii. Todos os direitos reservados.</p>
       </footer>
