@@ -5,42 +5,46 @@ import ong1 from '../assets/ong1.png';
 import ong2 from '../assets/ong2.png';
 import ong3 from '../assets/ong3.png';
 import ong4 from '../assets/ong4.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-const staticProducts = [
+export const staticProducts = [
   { 
     id: 1, 
     name: "ONG Esperança", 
     image: ong1,
-    description: "Ajude famílias carentes com alimentos essenciais.",
-    // Adicione outras propriedades que seu componente Item precise
+    description: "A ONG Esperança atua com doação de cestas básicas para famílias carentes nas comunidades do Rio de Janeiro.",
+    tooltipText: "Ajude famílias carentes com alimentos essenciais.",
   },
   { 
     id: 2, 
     name: "ONG Mãos Unidas", 
     image:  ong2,
-    description: "Garanta a saúde e dignidade com itens de higiene pessoal.",
+    description: "A ONG Mãos Unidas doa absorventes para jovens e adolescentes carentes nas comunidades do Distrito Federal.",
+    tooltipText: "Garanta a saúde e dignidade com itens de higiene pessoal.",
   },
   { 
     id: 3, 
     name: "ONG Futuro Brilhante", 
     image: ong3,
-    description: "Apoie a educação de crianças e jovens.",
+    description: "A ONG Futuro Brilhante conecta voluntários com crianças e jovens que precisam de reforço escolar no interior de São Paulo",
+    tooltipText: "Apoie a educação de crianças e jovens.",
   },
   { 
     id: 4, 
     name: "ONG Abraço Bom", 
     image: ong4,
-    description: "Mantenha alguém aquecido no inverno.",
+    description: "A ONG Abraço Bom realiza campanhas de doação de agasalhos pelos quatro cantos do Brasil",
+    tooltipText: "Mantenha alguém aquecido no inverno.",
   },
   ];
 
 export default function Products() {
   const navigate = useNavigate();
-  const [weatherInfo, setWeatherInfo] = useState(""); // eslint-disable-next-line no-unused-vars
+  const location = useLocation();
+  const [weatherInfo, setWeatherInfo] = useState(""); // eslint-disable-next-line
   const [cityIndex, setCityIndex] = useState(0); 
 
-  const apiKey = "79f2870e4528540bb5f5079faa56e91f"; // Sua chave da API
+  const apiKey = "79f2870e4528540bb5f5079faa56e91f";
 
   // Efeito para buscar o clima e atualizar a cada 5 segundos
   useEffect(() => {
@@ -52,8 +56,6 @@ export default function Products() {
 
     // Função que busca o clima da cidade atual e atualiza o estado
     const buscarClimaEAtualizar = () => {
-      // Usamos o callback de setCityIndex para garantir que estamos sempre
-      // trabalhando com o índice mais atualizado e para a próxima cidade.
       setCityIndex(prevIndex => {
         const currentCityIndexToFetch = prevIndex;
         const cidade = cidades[currentCityIndexToFetch];
@@ -79,27 +81,24 @@ export default function Products() {
             setWeatherInfo("Não foi possível carregar o clima.");
           });
 
-        // Retorna o próximo índice para a próxima rodada da função no intervalo
         return (prevIndex + 1) % cidades.length;
       });
     };
 
     console.log(`[Clima] useEffect de clima inicializado (Configurando intervalo).`);
 
-    // Chamada inicial para buscar o clima imediatamente na montagem do componente
     buscarClimaEAtualizar();
 
     // Configura o intervalo para chamar a função a cada 5 segundos
     const intervalId = setInterval(buscarClimaEAtualizar, 5000);
     console.log(`[Clima] Intervalo definido com ID: ${intervalId}`);
 
-    // Função de limpeza: será executada quando o componente for desmontado para parar o intervalo
     return () => {
       console.log(`[Clima] Limpando intervalo com ID: ${intervalId}`);
       clearInterval(intervalId);
     };
 
-  }, [apiKey]); // O efeito depende apenas da apiKey. cityIndex é gerenciado internamente pelo setState.
+  }, [apiKey]);
 
   return (
     <div className="content-product">
@@ -108,24 +107,23 @@ export default function Products() {
           <img src={logo} alt="Logo da Empresa" />
         </div>
         <div className="user">
-          <span>Home</span>
+          <Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Home</Link>
         </div>
         <div className="user">
-          <span>ONGs Parceiras</span>
+          <Link to="/products" className={location.pathname === '/products' ? 'active-link' : ''}>ONGs Parceiras</Link>
         </div>
         <div className="user">
-          <span>Seja Voluntário</span>
+          <Link to="/contact" className={location.pathname === '/contact' ? 'active-link' : ''}>Seja Voluntário</Link>
         </div>
       </header>
 
-      {/* Div para exibir as informações do clima, posicionada abaixo do header */}
       <div className="weather-info-bar">
         {weatherInfo}
       </div>
 
       <section className="main-products"> 
-        {staticProducts.map((p) => ( // <<< AGORA MAPEA 'staticProducts'
-          <Item key={p.id} product={p} /> // <<< Certifique-se de que 'key' e 'product' usam a propriedade correta
+        {staticProducts.map((p) => (
+          <Item key={p.id} product={p} />
         ))}
       </section>
 
