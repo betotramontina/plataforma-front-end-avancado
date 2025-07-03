@@ -17,7 +17,7 @@
 #### Instalar Python
 #### Instalar Visual Studio Code (ou outra ferramenta conveniente)
 #### Utilizar terminal Linux (wsl ubuntu)
-#### Abrir VS Code e clonar o seguinte repositório: 
+#### Abrir VS Code e clonar o seguinte repositório: https://github.com/betotramontina/plataforma-front-end-avancado.git 
 #### Abrir docs em um terminal integrado e executar os seguintes comandos:
 #### Criar ambiente virtual $ python3 -m venv venv_api
 #### Ativar ambiente virtual $ source venv_api/bin/activate
