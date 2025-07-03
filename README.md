@@ -10,8 +10,7 @@
 ## A aplicação utiliza a API OpenWeatherMap para exibir informações meteorológicas no cabeçalho do site.
 #### Licença de uso: não aplicável
 #### Cadastro: não aplicável
-#### Rota: GET `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`
-#### Parâmetros: q = nome da cidade; appid = chave de API; units = define as unidades de medida; lang = define o idioma da resposta (pt_br)
+#### Rota - URL `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`
 
 # Como executar
 #### Instalar Python
