@@ -22,18 +22,18 @@
 #### Criar ambiente virtual $ python3 -m venv venv_api
 #### Ativar ambiente virtual $ source venv_api/bin/activate
 #### Atualizar os pacotes do Ubuntu no WSL 
-$ sudo apt update 
-$ sudo apt upgrade -y
+#### $ sudo apt update 
+#### $ sudo apt upgrade -y
 #### Instalar o curl (se ainda não tiver) $ sudo apt install curl -y
 #### Instalar o NVM (Node Version Manager) no WSL $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh
 #### Recarregar o ambiente do shell no WSL $ source ~/.bashrc
 #### Verificar a instalação do NVM $ command -v nvm
 #### Instalar o Node.js usando NVM no WSL $ nvm install --lts
 #### Definir a versão do Node.js a ser usada $ nvm use --lts
-#### Instalar e iniciar $ npm install
+#### Instalar $ npm install
 #### Deletar pasta Node Modules
 #### Instalar e iniciar 
-$ npm install 
-$ npm start
+#### $ npm install 
+#### $ npm start
 #### Abra o http://localhost:3000/#/ no navegador.
 #### Interagir com a aplicação
