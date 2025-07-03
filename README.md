@@ -7,7 +7,7 @@
 ### Plataforma que conecta voluntários e ONGs. 
 
 # API externa: OpenWeatherMap
-## A aplicação utiliza a API OpenWeatherMap para exibir informações meteorológicas no cabeçalho do site.
+## A aplicação utiliza a API OpenWeatherMap para exibir informações sobre o clima das capitais brasileiras.
 #### Licença de uso: não aplicável
 #### Cadastro: não aplicável
 #### Rota - URL `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&lang=pt_br&units=metric`
